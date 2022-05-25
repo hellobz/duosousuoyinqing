@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小旋综合搜素引擎</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* background-color: #009688; */
+            background-color: #cefff1;
+            min-height: 730px;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap" style="width: 700px;margin: 20px auto;">
+        <ul
+            style="list-style-type: none;display: flex;padding-left: 20px;box-sizing: border-box;width:660px;height: 80px;align-items: center;background-color: #eee;color: #333;font-size: 16px;border-radius: 20px;margin-bottom: 50px;">
+            <li @click="handleChangeList(item.id)" v-for="item in search" :key="item.id"
+                style="cursor: pointer;width:29%;height: 50px;text-align: center;line-height: 50px;font-size: 18px;margin-right: 4%;"
+                :style="{'backgroundColor': (currentTab == item.id ? '#009688': '#fff'),'color': (currentTab == item.id ? '#fff' : '#000')}"
+                v-cloak>{{item.name}}</li>
+        </ul>
+        <div style="display: flex;width: 700px;align-items: center;">
+            <input v-model="iptvalue"
+                style="font-size: 24px;margin-right: 20px; width: 500px;height:55px;border-radius: 18px;border: 1px solid #eee;padding-left: 20px;box-sizing: border-box;outline: none;"
+                type="text" id="ipt">
+            <button @click="handleClick"
+                style="width:180px;height: 55px;line-height: 55px;text-align:center;color: #fff;background-color: #4399FC;border-radius: 10px;font-size: 18px;outline: none;border: none;">搜索</button>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#wrap',
+            data: {
+                iptvalue: '',
+                currentTab: 1,
+                search: [
+                    {
+                        id: 1,
+                        name: '百度'
+                    },
+                    {
+                        id: 2,
+                        name: '搜狗'
+                    },
+                    {
+                        id: 3,
+                        name: '360搜索'
+                    },
+                    {
+                        id: 4,
+                        name: '必应搜索'
+                    }
+                ]
+
+            },
+            methods: {
+                handleChangeList(id) {
+                    this.currentTab = id;
+                },
+
+                handleClick() {
+                    if (this.currentTab == 1) {
+                        window.open("https://www.baidu.com/s?wd=" + this.iptvalue);
+                    } else if (this.currentTab == 2) {
+                        window.open('https://www.sogou.com/web?query=' + this.iptvalue);
+                    } else if (this.currentTab == 3) {
+                        window.open('https://www.so.com/s?ie=utf-8&fr=none&src=360sou_newhome&q=' + this.iptvalue);
+                    } else if (this.currentTab == 4) {
+                        window.open('https://cn.bing.com/search?q=' + this.iptvalue);
+                    }
+                    else {
+                        alert('你是否选择上面的搜索引擎搜索');
+                    }
+                    // window.location.href ="https://www.baidu.com/s?wd="+this.iptvalue;
+
+                    // axios.get(`https://www.baidu.com/s?wd=${this.iptvalue}`)
+                    // .then((res)=>{
+                    //     console.log(res);
+                    //     window.location.href ="https://www.baidu.com/s?wd="+this.iptvalue;
+                    // }).catch(()=>{
+
+                    // })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
